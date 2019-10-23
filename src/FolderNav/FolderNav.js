@@ -1,15 +1,22 @@
-import React, {Component} from 'react';
-import {NavLink} from 'react-router-dom';
+import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 
 class FolderNav extends Component {
     render() {
         const folders = this.props.folders
             .map((folder, i) => {
                 return (
-                <NavLink to={`/folder/${folder.id}`} className="folder" key={i}>
-                    {folder.name}
-                </NavLink>
-            )});
+                    <div 
+                        className="folder" 
+                        key={i}
+                        onClick={() => this.props.handleSelectedFolder(folder)}
+                    >
+                        <NavLink to={`/folder/${folder.id}`} className="folder">
+                            {folder.name}
+                        </NavLink>
+                    </div>
+                )
+            });
         return (
             <div className="FolderNav">
                 {folders}

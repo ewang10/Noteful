@@ -19,6 +19,19 @@ class App extends Component {
       selectedNote: ''
      };
   }
+
+  updateSelectedFolder(folder) {
+    this.setState({
+      selectedFolder: folder
+    });
+  }
+
+  updateSelectedNote(note) {
+    this.setState({
+      selectedNote: note
+    });
+  }
+
   //Handles navigation for the note page
   //and sidebar.
   handleNav() {
@@ -29,6 +42,7 @@ class App extends Component {
           render={() => 
             <FolderNav 
               folders={this.state.store.folders}
+              handleSelectedFolder={folder => this.updateSelectedFolder(folder)}
             />
           }
         />
@@ -37,12 +51,13 @@ class App extends Component {
           render={() => 
             <FolderNav 
               folders={this.state.store.folders}
+              handleSelectedFolder={folder => this.updateSelectedFolder(folder)}
             />
           }
         />
         <Route
           path="/note/:noteId"
-          render={() =>
+          render={({history}) =>
             <NoteNav 
               folder={this.state.selectedFolder}
             />
@@ -74,6 +89,7 @@ class App extends Component {
             <NoteFilter 
               folder={this.state.selectedFolder}
               notes={this.state.store.notes}
+              handleSelectedNote={note => this.updateSelectedNote(note)}
             />
           }
         />
@@ -83,6 +99,7 @@ class App extends Component {
             <NoteFilter 
               folder={this.state.selectedFolder}
               notes={this.state.store.notes}
+              handleSelectedNote={note => this.updateSelectedNote(note)}
             />
           }
         />
@@ -91,18 +108,27 @@ class App extends Component {
           render={() =>
             <NoteMain 
               note={this.state.selectedNote}
+              handleSelectedNote={note => this.updateSelectedNote(note)}
             />
           }
         />
       </>
     );
   }
+
+  resetState() {
+    this.setState({
+      selectedFolder: '',
+      selectedNote: ''
+    });
+  }
+
   render() {
     return (
       <div className="App">
         <nav>{this.handleNav()}</nav>
         <header>
-          <h1>
+          <h1 onClick={() => this.resetState()}>
             <Link to='/'>
               Noteful
             </Link>
