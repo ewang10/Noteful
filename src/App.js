@@ -7,6 +7,7 @@ import NoteFilter from './NoteFilter/NoteFilter';
 import NoteMain from './NoteMain/NoteMain';
 import AddFolder from './AddFolder/AddFolder';
 import AddNote from './AddNote/AddNote';
+import NotefulContext from './NotefulContext';
 
 import './App.css';
 
@@ -39,45 +40,23 @@ class App extends Component {
       <>
         <Route
           exact path="/"
-          render={() =>
-            <FolderNav
-              folders={this.state.store.folders}
-              handleSelectedFolder={folder => this.updateSelectedFolder(folder)}
-            />
-          }
+          component={FolderNav}
         />
         <Route
           path="/folder/:folderId"
-          render={() =>
-            <FolderNav
-              folders={this.state.store.folders}
-              handleSelectedFolder={folder => this.updateSelectedFolder(folder)}
-            />
-          }
+          component={FolderNav}
         />
         <Route
           path="/note/:noteId"
-          render={({ history }) =>
-            <NoteNav
-              note={this.state.selectedNote}
-            />
-          }
+          component={NoteNav}
         />
         <Route
           path="/add-folder"
-          render={({ history }) =>
-            <NoteNav
-              note={this.state.selectedNote}
-            />
-          }
+          component={NoteNav}
         />
         <Route
           path="/add-note"
-          render={({ history }) =>
-            <NoteNav
-              note={this.state.selectedNote}
-            />
-          }
+          component={NoteNav}
         />
       </>
     );
@@ -89,32 +68,15 @@ class App extends Component {
       <>
         <Route
           exact path="/"
-          render={() =>
-            <NoteFilter
-              folder={this.state.selectedFolder}
-              notes={this.state.store.notes}
-              handleSelectedNote={note => this.updateSelectedNote(note)}
-            />
-          }
+          component={NoteFilter}
         />
         <Route
           path="/folder/:folderId"
-          render={() =>
-            <NoteFilter
-              folder={this.state.selectedFolder}
-              notes={this.state.store.notes}
-              handleSelectedNote={note => this.updateSelectedNote(note)}
-            />
-          }
+          component={NoteFilter}
         />
         <Route
           path="/note/:noteId"
-          render={() =>
-            <NoteMain
-              note={this.state.selectedNote}
-              handleSelectedNote={note => this.updateSelectedNote(note)}
-            />
-          }
+          component={NoteMain}
         />
 
         <Route
@@ -123,11 +85,7 @@ class App extends Component {
         />
         <Route
           path='/add-note'
-          render={() =>
-            <AddNote
-              folders={this.state.store.folders}
-            />
-          }
+          component={AddNote}
         />
       </>
     );
@@ -141,17 +99,27 @@ class App extends Component {
   }
 
   render() {
+    const contextValue = {
+      folders: this.state.store.folders,
+      notes: this.state.store.notes,
+      updateFolder: this.updateSelectedFolder,
+      updateNote: this.updateSelectedNote,
+      folder: this.state.selectedFolder,
+      note: this.state.selectedNote,
+    }
     return (
       <div className="App">
-        <nav className="App__nav">{this.handleNav()}</nav>
-        <header className="App__header">
-          <h1 onClick={() => this.resetState()}>
-            <Link to='/'>
-              Noteful
+        <NotefulContext.Provider value={contextValue}>
+          <nav className="App__nav">{this.handleNav()}</nav>
+          <header className="App__header">
+            <h1 onClick={() => this.resetState()}>
+              <Link to='/'>
+                Noteful
             </Link>
-          </h1>
-        </header>
-        <main className="App__main">{this.handleMain()}</main>
+            </h1>
+          </header>
+          <main className="App__main">{this.handleMain()}</main>
+        </NotefulContext.Provider>
       </div>
     );
   }

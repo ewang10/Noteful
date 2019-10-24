@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
+import NotefulContext from '../NotefulContext';
 import './Note.css';
 
 class Note extends Component {
+    static contextType = NotefulContext;
     render() {
         const { note } = this.props;
         //console.log(new Date());
@@ -17,7 +19,7 @@ class Note extends Component {
             <div className="Note">
                 <h2
                     className="noteName"
-                    onClick={() => this.props.handleSelectedNote(note)}
+                    onClick={() => this.context.updateNote(note)}
                 >
                     <Link to={`/note/${note.id}`}>
                         {note.name}
