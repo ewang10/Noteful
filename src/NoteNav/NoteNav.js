@@ -1,18 +1,22 @@
-import React, {Component} from 'react';
-import {withRouter} from 'react-router-dom';
+import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import './NoteNav.css';
 
 class NoteNav extends Component {
     render() {
 
         return (
             <div className="NoteNav">
-                <button 
+                <button
                     type="submit"
-                    onClick={this.props.history.goBack()}
+                    onClick={() => this.props.history.goBack()}
                 >
                     Back
                 </button>
-                {this.props.folder ? this.props.folder.name : ''}
+                <p>
+                    {this.props.note ? this.props.note.name : ''}
+                </p>
+
             </div>
         );
     }
@@ -20,7 +24,7 @@ class NoteNav extends Component {
 
 NoteNav.defaultProps = {
     history: {
-        goBack: () => {}
+        goBack: () => { }
     }
 }
 

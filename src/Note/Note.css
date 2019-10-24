@@ -1,0 +1,24 @@
+.Note {
+    background-color: #07101b;
+    margin: 10px 15px;
+    padding: 10px;
+}
+
+.Note > h2 {
+    margin: 0;
+}
+
+.note-control-date {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5%;
+}
+
+.note-control-date > button {
+    padding: 5px 10px;
+    font-size: 1em;
+}
+
+.Note > h2 > a, .note-control-date > .note-date {
+    color: #8E939B;
+}

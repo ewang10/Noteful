@@ -1,0 +1,10 @@
+.NoteMain > .Note, .NoteMain > .noteContent {
+    width: 35%;
+}
+
+.NoteMain > .noteContent {
+    color: white;
+    margin: 0 20px;
+    line-height: 150%;
+    font-size: 1.05em;
+}

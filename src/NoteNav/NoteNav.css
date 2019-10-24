@@ -1,0 +1,18 @@
+.NoteNav {
+    margin: 130px 0 0;
+    text-align: right;
+    margin-left: 70%;
+}
+
+.NoteNav > button {
+    display: block;
+    margin: 0 auto;
+    font-size: 2em;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.NoteNav > p {
+    text-align: center;
+    font-size: 3em;
+}

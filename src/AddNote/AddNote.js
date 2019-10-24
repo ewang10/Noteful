@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './AddNote.css';
 
 class AddNote extends Component {
     render() {
@@ -36,6 +37,9 @@ class AddNote extends Component {
                             <option value="None">...</option>
                             {options}
                         </select>
+                        <button type="submit">
+                            Add Note
+                        </button>
                     </legend>
                 </form>
             </div>

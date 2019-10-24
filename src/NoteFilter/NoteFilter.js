@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
 import Note from '../Note/Note';
+import './NoteFilter.css';
 
 class NoteFilter extends Component {
     noFilter() {
@@ -33,6 +35,11 @@ class NoteFilter extends Component {
         return (
             <div className="NoteFilter">
                 {notes}
+                <button type="submit">
+                    <Link to='/add-note'>
+                        Add Note
+                    </Link>
+                </button>
             </div>
         );
     }

@@ -1,11 +1,12 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Note from '../Note/Note';
+import './NoteMain.css';
 
 class NoteMain extends Component {
     displayNote() {
         return (
             <>
-                <Note 
+                <Note
                     note={this.props.note}
                     handleSelectedNote={this.props.handleSelectedNote}
                 />

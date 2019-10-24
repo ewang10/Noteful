@@ -13,11 +13,11 @@ import './App.css';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       store: STORE,
       selectedFolder: '',
       selectedNote: ''
-     };
+    };
   }
 
   updateSelectedFolder(folder) {
@@ -39,8 +39,8 @@ class App extends Component {
       <>
         <Route
           exact path="/"
-          render={() => 
-            <FolderNav 
+          render={() =>
+            <FolderNav
               folders={this.state.store.folders}
               handleSelectedFolder={folder => this.updateSelectedFolder(folder)}
             />
@@ -48,8 +48,8 @@ class App extends Component {
         />
         <Route
           path="/folder/:folderId"
-          render={() => 
-            <FolderNav 
+          render={() =>
+            <FolderNav
               folders={this.state.store.folders}
               handleSelectedFolder={folder => this.updateSelectedFolder(folder)}
             />
@@ -57,21 +57,25 @@ class App extends Component {
         />
         <Route
           path="/note/:noteId"
-          render={({history}) =>
-            <NoteNav 
-              folder={this.state.selectedFolder}
+          render={({ history }) =>
+            <NoteNav
+              note={this.state.selectedNote}
             />
           }
         />
-        <Route 
-          path='/add-folder'
-          component={AddFolder}
+        <Route
+          path="/add-folder"
+          render={({ history }) =>
+            <NoteNav
+              note={this.state.selectedNote}
+            />
+          }
         />
-        <Route 
-          path='/add-note'
-          render={() => 
-            <AddNote 
-              folders={this.state.store.folders}
+        <Route
+          path="/add-note"
+          render={({ history }) =>
+            <NoteNav
+              note={this.state.selectedNote}
             />
           }
         />
@@ -86,7 +90,7 @@ class App extends Component {
         <Route
           exact path="/"
           render={() =>
-            <NoteFilter 
+            <NoteFilter
               folder={this.state.selectedFolder}
               notes={this.state.store.notes}
               handleSelectedNote={note => this.updateSelectedNote(note)}
@@ -96,7 +100,7 @@ class App extends Component {
         <Route
           path="/folder/:folderId"
           render={() =>
-            <NoteFilter 
+            <NoteFilter
               folder={this.state.selectedFolder}
               notes={this.state.store.notes}
               handleSelectedNote={note => this.updateSelectedNote(note)}
@@ -106,9 +110,22 @@ class App extends Component {
         <Route
           path="/note/:noteId"
           render={() =>
-            <NoteMain 
+            <NoteMain
               note={this.state.selectedNote}
               handleSelectedNote={note => this.updateSelectedNote(note)}
+            />
+          }
+        />
+
+        <Route
+          path='/add-folder'
+          component={AddFolder}
+        />
+        <Route
+          path='/add-note'
+          render={() =>
+            <AddNote
+              folders={this.state.store.folders}
             />
           }
         />
@@ -126,15 +143,15 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <nav>{this.handleNav()}</nav>
-        <header>
+        <nav className="App__nav">{this.handleNav()}</nav>
+        <header className="App__header">
           <h1 onClick={() => this.resetState()}>
             <Link to='/'>
               Noteful
             </Link>
           </h1>
         </header>
-        <main>{this.handleMain()}</main>
+        <main className="App__main">{this.handleMain()}</main>
       </div>
     );
   }
