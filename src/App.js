@@ -21,13 +21,13 @@ class App extends Component {
     };
   }
 
-  updateSelectedFolder(folder) {
+  updateSelectedFolder = folder => {
     this.setState({
       selectedFolder: folder
     });
   }
 
-  updateSelectedNote(note) {
+  updateSelectedNote = note => {
     this.setState({
       selectedNote: note
     });

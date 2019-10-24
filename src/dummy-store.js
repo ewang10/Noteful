@@ -1,3 +1,43 @@
+import React, {Component} from 'react';
+
+function getFolders() {
+  const url = 'http://localhost:9090/folders';
+  fetch(url)
+  .then(res => {
+    if(!res.ok) {
+      throw new Error(res.statusText);
+    }
+    return res.json();
+  })
+  .then(data => {
+    console.log(data);
+    return data;
+  })
+  .catch(err => alert("something went wrong: " + err.message));
+}
+
+function getNotes() {
+  const url = 'http://localhost:9090/notes';
+  fetch(url)
+  .then(res => {
+    if(!res.ok) {
+      throw new Error(res.statusText);
+    }
+    return res.json();
+  })
+  .then(data => {
+    console.log(data);
+    return data;
+  })
+  .catch(err => alert("something went wrong: " + err.message));
+}
+
+export default {
+  "folders": getFolders(),
+  "notes": getNotes(),
+}
+
+/*
 export default {
     "folders": [
       {
@@ -114,3 +154,4 @@ export default {
       }
     ]
   }
+*/

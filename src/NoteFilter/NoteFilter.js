@@ -18,7 +18,7 @@ class NoteFilter extends Component {
 
     noteFilter() {
         const notes = this.context.notes
-            .filter(note => note.folderId === this.props.folder.id)
+            .filter(note => note.folderId === this.context.folder.id)
             .map((note, i) => 
                 <Note 
                     note={note} 
