@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
-import STORE from './dummy-store';
+//import STORE from './dummy-store';
 import FolderNav from './FolderNav/FolderNav';
 import NoteNav from './NoteNav/NoteNav';
 import NoteFilter from './NoteFilter/NoteFilter';
@@ -15,10 +15,43 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      store: STORE,
+      folders: [],
+      notes: [],
       selectedFolder: '',
       selectedNote: ''
     };
+  }
+
+  componentDidMount() {
+    const folderUrl = 'http://localhost:9090/folders';
+    fetch(folderUrl)
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(res.statusText);
+        }
+        return res.json();
+      })
+      .then(data => {
+        this.setState({
+          folders: data
+        });
+      })
+      .catch(err => alert("something went wrong: " + err.message));
+
+    const notesUrl = 'http://localhost:9090/notes';
+    fetch(notesUrl)
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(res.statusText);
+        }
+        return res.json();
+      })
+      .then(data => {
+        this.setState({
+          notes: data
+        });
+      })
+      .catch(err => alert("something went wrong: " + err.message));
   }
 
   updateSelectedFolder = folder => {
@@ -30,6 +63,14 @@ class App extends Component {
   updateSelectedNote = note => {
     this.setState({
       selectedNote: note
+    });
+  }
+
+  deleteNote = noteId => {
+    const newNotes = this.state.notes.filter(note =>
+      note.id !== noteId);
+    this.setState({
+      notes: newNotes
     });
   }
 
@@ -100,10 +141,11 @@ class App extends Component {
 
   render() {
     const contextValue = {
-      folders: this.state.store.folders,
-      notes: this.state.store.notes,
+      folders: this.state.folders,
+      notes: this.state.notes,
       updateFolder: this.updateSelectedFolder,
       updateNote: this.updateSelectedNote,
+      deleteNote: this.deleteNote,
       folder: this.state.selectedFolder,
       note: this.state.selectedNote,
     }

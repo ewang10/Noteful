@@ -6,6 +6,28 @@ import './Note.css';
 
 class Note extends Component {
     static contextType = NotefulContext;
+    deleteNoteRequest(noteId, cb) {
+        const url = 'http://localhost:9090/notes';
+        fetch(`${url}/${noteId}`, {
+            method: "DELETE",
+            headers: {
+                'content-type': 'application/json'
+            }
+        })
+        .then(res => {
+            if(!res.ok) {
+                throw new Error(res.statusText);
+            }
+            return res.json;
+        })
+        .then(data => {
+            cb(noteId);
+            this.props.history.push('/');
+        })
+        .catch(err => {
+            console.log("something went wrong: " + err.message);
+        });
+    }
     render() {
         const { note } = this.props;
         //console.log(new Date());
@@ -29,7 +51,14 @@ class Note extends Component {
                     <div className="note-date">
                         Modified {format(new Date(note.modified), 'do MMM yyyy')}
                     </div>
-                    <button type="submit">Delete</button>
+                    <button 
+                        type="submit"
+                        onClick={() => 
+                            this.deleteNoteRequest(note.id, 
+                                this.context.deleteNote)}
+                    >
+                            Delete
+                    </button>
                 </div>
             </div>
         );
