@@ -39,7 +39,7 @@ class AddNote extends Component {
                             <option value="None">...</option>
                             {options}
                         </select>
-                        <button type="submit">
+                        <button id="add-note-btn" type="submit">
                             Add Note
                         </button>
                     </legend>

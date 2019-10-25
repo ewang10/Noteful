@@ -22,6 +22,7 @@ class Note extends Component {
         })
         .then(data => {
             cb(noteId);
+            //console.log(this.props.history);
             this.props.history.push('/');
         })
         .catch(err => {
@@ -29,6 +30,7 @@ class Note extends Component {
         });
     }
     render() {
+        //console.log(this.props.history);
         const { note } = this.props;
         //console.log(new Date());
         //console.log(note.modified);

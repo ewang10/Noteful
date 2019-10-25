@@ -10,6 +10,7 @@ class NoteMain extends Component {
             <>
                 <Note
                     note={this.context.note}
+                    history={this.props.history}
                 />
                 <div className="noteContent">
                     {this.context.note.content}

@@ -10,7 +10,8 @@ class NoteFilter extends Component {
         const notes = this.context.notes.map((note, i) =>
             <Note 
                 note={note} 
-                key={i} 
+                key={i}
+                history={this.props.history}
             />
         );
         return notes;

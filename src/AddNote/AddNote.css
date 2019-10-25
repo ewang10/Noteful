@@ -21,15 +21,24 @@ legend {
 
 .AddNote form label,
 .AddNote form input,
-.Addnote form textarea,
-.Addnote form select {
+#note-content,
+#note-folder {
     display: block;
     margin: 0;
     margin-bottom: 10px;
     width: 100%;
 }
 
-.AddNote form input {
+#note-folder > option {
+    width: 100%;
+}
+
+#note-content {
+    height: 80px;
+}
+
+.AddNote form input,
+#note-folder {
     height: 35px;
 }
 
@@ -38,7 +47,7 @@ legend {
     font-size: 1.5em;
 }
 
-.Addnote form button {
+#add-note-btn {
     width: 50%;
     padding: 10px 15px;
     font-size: 30px;
