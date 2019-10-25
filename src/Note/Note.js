@@ -1,10 +1,36 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
+import NotefulContext from '../NotefulContext';
 import './Note.css';
 
 class Note extends Component {
+    static contextType = NotefulContext;
+    deleteNoteRequest(noteId, cb) {
+        const url = 'http://localhost:9090/notes';
+        fetch(`${url}/${noteId}`, {
+            method: "DELETE",
+            headers: {
+                'content-type': 'application/json'
+            }
+        })
+        .then(res => {
+            if(!res.ok) {
+                throw new Error(res.statusText);
+            }
+            return res.json;
+        })
+        .then(data => {
+            cb(noteId);
+            //console.log(this.props.history);
+            this.props.history.push('/');
+        })
+        .catch(err => {
+            console.log("something went wrong: " + err.message);
+        });
+    }
     render() {
+        //console.log(this.props.history);
         const { note } = this.props;
         //console.log(new Date());
         //console.log(note.modified);
@@ -17,7 +43,7 @@ class Note extends Component {
             <div className="Note">
                 <h2
                     className="noteName"
-                    onClick={() => this.props.handleSelectedNote(note)}
+                    onClick={() => this.context.updateNote(note)}
                 >
                     <Link to={`/note/${note.id}`}>
                         {note.name}
@@ -27,7 +53,14 @@ class Note extends Component {
                     <div className="note-date">
                         Modified {format(new Date(note.modified), 'do MMM yyyy')}
                     </div>
-                    <button type="submit">Delete</button>
+                    <button 
+                        type="submit"
+                        onClick={() => 
+                            this.deleteNoteRequest(note.id, 
+                                this.context.deleteNote)}
+                    >
+                            Delete
+                    </button>
                 </div>
             </div>
         );

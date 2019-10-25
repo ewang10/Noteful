@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import NotefulContext from '../NotefulContext';
 import './NoteNav.css';
 
 class NoteNav extends Component {
+    static contextType = NotefulContext;
     render() {
-
+        const {note} = this.context;
         return (
             <div className="NoteNav">
                 <button
@@ -14,7 +15,7 @@ class NoteNav extends Component {
                     Back
                 </button>
                 <p>
-                    {this.props.note ? this.props.note.name : ''}
+                    {note ? note.name : ''}
                 </p>
 
             </div>
@@ -28,4 +29,4 @@ NoteNav.defaultProps = {
     }
 }
 
-export default withRouter(NoteNav);
+export default NoteNav;

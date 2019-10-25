@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
-import STORE from './dummy-store';
+//import STORE from './dummy-store';
 import FolderNav from './FolderNav/FolderNav';
 import NoteNav from './NoteNav/NoteNav';
 import NoteFilter from './NoteFilter/NoteFilter';
 import NoteMain from './NoteMain/NoteMain';
 import AddFolder from './AddFolder/AddFolder';
 import AddNote from './AddNote/AddNote';
+import NotefulContext from './NotefulContext';
 
 import './App.css';
 
@@ -14,21 +15,62 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      store: STORE,
+      folders: [],
+      notes: [],
       selectedFolder: '',
       selectedNote: ''
     };
   }
 
-  updateSelectedFolder(folder) {
+  componentDidMount() {
+    const folderUrl = 'http://localhost:9090/folders';
+    fetch(folderUrl)
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(res.statusText);
+        }
+        return res.json();
+      })
+      .then(data => {
+        this.setState({
+          folders: data
+        });
+      })
+      .catch(err => alert("something went wrong: " + err.message));
+
+    const notesUrl = 'http://localhost:9090/notes';
+    fetch(notesUrl)
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(res.statusText);
+        }
+        return res.json();
+      })
+      .then(data => {
+        this.setState({
+          notes: data
+        });
+      })
+      .catch(err => alert("something went wrong: " + err.message));
+  }
+
+  updateSelectedFolder = folder => {
     this.setState({
       selectedFolder: folder
     });
   }
 
-  updateSelectedNote(note) {
+  updateSelectedNote = note => {
     this.setState({
       selectedNote: note
+    });
+  }
+
+  deleteNote = noteId => {
+    const newNotes = this.state.notes.filter(note =>
+      note.id !== noteId);
+    this.setState({
+      notes: newNotes
     });
   }
 
@@ -39,45 +81,23 @@ class App extends Component {
       <>
         <Route
           exact path="/"
-          render={() =>
-            <FolderNav
-              folders={this.state.store.folders}
-              handleSelectedFolder={folder => this.updateSelectedFolder(folder)}
-            />
-          }
+          component={FolderNav}
         />
         <Route
           path="/folder/:folderId"
-          render={() =>
-            <FolderNav
-              folders={this.state.store.folders}
-              handleSelectedFolder={folder => this.updateSelectedFolder(folder)}
-            />
-          }
+          component={FolderNav}
         />
         <Route
           path="/note/:noteId"
-          render={({ history }) =>
-            <NoteNav
-              note={this.state.selectedNote}
-            />
-          }
+          component={NoteNav}
         />
         <Route
           path="/add-folder"
-          render={({ history }) =>
-            <NoteNav
-              note={this.state.selectedNote}
-            />
-          }
+          component={NoteNav}
         />
         <Route
           path="/add-note"
-          render={({ history }) =>
-            <NoteNav
-              note={this.state.selectedNote}
-            />
-          }
+          component={NoteNav}
         />
       </>
     );
@@ -89,32 +109,15 @@ class App extends Component {
       <>
         <Route
           exact path="/"
-          render={() =>
-            <NoteFilter
-              folder={this.state.selectedFolder}
-              notes={this.state.store.notes}
-              handleSelectedNote={note => this.updateSelectedNote(note)}
-            />
-          }
+          component={NoteFilter}
         />
         <Route
           path="/folder/:folderId"
-          render={() =>
-            <NoteFilter
-              folder={this.state.selectedFolder}
-              notes={this.state.store.notes}
-              handleSelectedNote={note => this.updateSelectedNote(note)}
-            />
-          }
+          component={NoteFilter}
         />
         <Route
           path="/note/:noteId"
-          render={() =>
-            <NoteMain
-              note={this.state.selectedNote}
-              handleSelectedNote={note => this.updateSelectedNote(note)}
-            />
-          }
+          component={NoteMain}
         />
 
         <Route
@@ -123,11 +126,7 @@ class App extends Component {
         />
         <Route
           path='/add-note'
-          render={() =>
-            <AddNote
-              folders={this.state.store.folders}
-            />
-          }
+          component={AddNote}
         />
       </>
     );
@@ -141,17 +140,28 @@ class App extends Component {
   }
 
   render() {
+    const contextValue = {
+      folders: this.state.folders,
+      notes: this.state.notes,
+      updateFolder: this.updateSelectedFolder,
+      updateNote: this.updateSelectedNote,
+      deleteNote: this.deleteNote,
+      folder: this.state.selectedFolder,
+      note: this.state.selectedNote,
+    }
     return (
       <div className="App">
-        <nav className="App__nav">{this.handleNav()}</nav>
-        <header className="App__header">
-          <h1 onClick={() => this.resetState()}>
-            <Link to='/'>
-              Noteful
+        <NotefulContext.Provider value={contextValue}>
+          <nav className="App__nav">{this.handleNav()}</nav>
+          <header className="App__header">
+            <h1 onClick={() => this.resetState()}>
+              <Link to='/'>
+                Noteful
             </Link>
-          </h1>
-        </header>
-        <main className="App__main">{this.handleMain()}</main>
+            </h1>
+          </header>
+          <main className="App__main">{this.handleMain()}</main>
+        </NotefulContext.Provider>
       </div>
     );
   }

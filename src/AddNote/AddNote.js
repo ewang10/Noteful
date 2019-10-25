@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import NotefulContext from '../NotefulContext';
 import './AddNote.css';
 
 class AddNote extends Component {
+    static contextType = NotefulContext;
     render() {
-        const options = this.props.folders
+        const options = this.context.folders
             .map((folder, i) =>
                 <option key={i} value={folder.name}>{folder.name}</option>
             );
@@ -37,7 +39,7 @@ class AddNote extends Component {
                             <option value="None">...</option>
                             {options}
                         </select>
-                        <button type="submit">
+                        <button id="add-note-btn" type="submit">
                             Add Note
                         </button>
                     </legend>
