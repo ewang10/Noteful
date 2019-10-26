@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import NotefulContext from '../NotefulContext';
 import Note from '../Note/Note';
+import NoteError from '../NoteError/NoteError';
 import './NoteFilter.css';
 
 class NoteFilter extends Component {
     static contextType = NotefulContext;
     noFilter() {
         const notes = this.context.notes.map((note, i) =>
-            <Note 
-                note={note} 
-                key={i}
-                history={this.props.history}
-            />
+            <NoteError key={i}>
+                <Note
+                    note={note}
+                    key={i}
+                    history={this.props.history}
+                />
+            </NoteError>
         );
         return notes;
     }
@@ -20,15 +23,17 @@ class NoteFilter extends Component {
     noteFilter() {
         const notes = this.context.notes
             .filter(note => note.folderId === this.context.folder.id)
-            .map((note, i) => 
-                <Note 
-                    note={note} 
-                    key={i}
-                />
+            .map((note, i) =>
+                <NoteError>
+                    <Note
+                        note={note}
+                        key={i}
+                    />
+                </NoteError>
             );
         return notes;
     }
-    
+
     render() {
         const notes = this.context.folder ?
             this.noteFilter() : this.noFilter();
@@ -36,7 +41,10 @@ class NoteFilter extends Component {
         return (
             <div className="NoteFilter">
                 {notes}
-                <button type="submit">
+                <button
+                    type="submit"
+                    onClick={() => this.context.reset()}
+                >
                     <Link to='/add-note'>
                         Add Note
                     </Link>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
+import PropTypes from 'prop-types';
 import NotefulContext from '../NotefulContext';
 import './Note.css';
 
@@ -65,6 +66,10 @@ class Note extends Component {
             </div>
         );
     }
+}
+
+Note.propTypes = {
+    note: PropTypes.objectOf(PropTypes.string).isRequired
 }
 
 export default Note;
