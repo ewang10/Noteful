@@ -8,7 +8,12 @@ import NoteMain from './NoteMain/NoteMain';
 import AddFolder from './AddFolder/AddFolder';
 import AddNote from './AddNote/AddNote';
 import NotefulContext from './NotefulContext';
-
+import FolderNavError from './FolderNavError/FolderNavError';
+import NoteNavError from './NoteNavError/NoteNavError';
+import NoteFilterError from './NoteFilterError/NoteFilterError';
+import NoteMainError from './NoteMainError/NoteMainError';
+import AddFolderError from './AddFolderError/AddFolderError';
+import AddNoteError from './AddNoteError/AddNoteError';
 import './App.css';
 
 class App extends Component {
@@ -91,26 +96,30 @@ class App extends Component {
   handleNav() {
     return (
       <>
-        <Route
-          exact path="/"
-          component={FolderNav}
-        />
-        <Route
-          path="/folder/:folderId"
-          component={FolderNav}
-        />
-        <Route
-          path="/note/:noteId"
-          component={NoteNav}
-        />
-        <Route
-          path="/add-folder"
-          component={NoteNav}
-        />
-        <Route
-          path="/add-note"
-          component={NoteNav}
-        />
+        <FolderNavError>
+          <Route
+            exact path="/"
+            component={FolderNav}
+          />
+          <Route
+            path="/folder/:folderId"
+            component={FolderNav}
+          />
+        </FolderNavError>
+        <NoteNavError>
+          <Route
+            path="/note/:noteId"
+            component={NoteNav}
+          />
+          <Route
+            path="/add-folder"
+            component={NoteNav}
+          />
+          <Route
+            path="/add-note"
+            component={NoteNav}
+          />
+        </NoteNavError>
       </>
     );
   }
@@ -119,32 +128,40 @@ class App extends Component {
   handleMain() {
     return (
       <>
-        <Route
-          exact path="/"
-          component={NoteFilter}
-        />
-        <Route
-          path="/folder/:folderId"
-          component={NoteFilter}
-        />
-        <Route
-          path="/note/:noteId"
-          component={NoteMain}
-        />
+        <NoteFilterError>
+          <Route
+            exact path="/"
+            component={NoteFilter}
+          />
+          <Route
+            path="/folder/:folderId"
+            component={NoteFilter}
+          />
+        </NoteFilterError>
+        <NoteMainError>
+          <Route
+            path="/note/:noteId"
+            component={NoteMain}
+          />
+        </NoteMainError>
 
-        <Route
-          path='/add-folder'
-          component={AddFolder}
-        />
-        <Route
-          path='/add-note'
-          component={AddNote}
-        />
+        <AddFolderError>
+          <Route
+            path='/add-folder'
+            component={AddFolder}
+          />
+        </AddFolderError>
+        <AddNoteError>
+          <Route
+            path='/add-note'
+            component={AddNote}
+          />
+        </AddNoteError>
       </>
     );
   }
 
-  resetState() {
+  resetState = () => {
     this.setState({
       selectedFolder: '',
       selectedNote: ''
@@ -162,6 +179,7 @@ class App extends Component {
       note: this.state.selectedNote,
       addFolder: this.addFolder,
       addNote: this.addNote,
+      reset: this.resetState,
     }
     return (
       <div className="App">

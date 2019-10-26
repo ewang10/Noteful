@@ -10,6 +10,7 @@ const NotefulContext = React.createContext({
     note: '',
     addFolder: () => {},
     addNote: () => {},
+    reset: () => {}
 })
 
 export default NotefulContext;

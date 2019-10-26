@@ -25,7 +25,10 @@ class FolderNav extends Component {
         return (
             <div className="FolderNav">
                 {folders}
-                <button>
+                <button
+                    type="submit"
+                    onClick={() => this.context.reset()}
+                >
                     <Link to='/add-folder'>Add Folder</Link>
                 </button>
             </div>
