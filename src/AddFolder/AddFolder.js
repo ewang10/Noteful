@@ -25,15 +25,21 @@ class AddFolder extends Component {
 
     validateFolderName() {
         const name = this.state.folderName.value.trim();
+        const match = this.context.folders.find(folder =>
+            folder.name === this.state.folderName.value);
         if (name.length === 0) {
             return 'Name is required';
+        } else if (match) {
+            return "There is already a folder with this name. Please choose another name.";
         }
     }
 
     handleSubmit(e) {
         e.preventDefault();
         const {folderName} = e.target;
-        const name = folderName.value;
+        const name = {
+            name: folderName.value
+        };
         //console.log("folder name ", name);
         this.setState({error: null});
 
@@ -47,6 +53,7 @@ class AddFolder extends Component {
         })
         .then(res => {
             if (!res.ok) {
+                console.log("response not okay");
                 throw new Error(res.statusText);
             }
             return res.json();
@@ -55,6 +62,7 @@ class AddFolder extends Component {
             folderName.value = '';
             console.log("folder data", data);
             this.context.addFolder(data);
+            console.log("going from add folder to home...");
             this.props.history.push('/');
         })
         .catch(error => this.setState({error}));

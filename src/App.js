@@ -80,6 +80,12 @@ class App extends Component {
     });
   }
 
+  addNote = note => {
+    this.setState({
+      notes: [...this.state.notes, note]
+    });
+  }
+
   //Handles navigation for the note page
   //and sidebar.
   handleNav() {
@@ -155,6 +161,7 @@ class App extends Component {
       folder: this.state.selectedFolder,
       note: this.state.selectedNote,
       addFolder: this.addFolder,
+      addNote: this.addNote,
     }
     return (
       <div className="App">
