@@ -17,8 +17,8 @@ class AddNote extends Component {
                 touched: false
             },
             folder: {
-                value: '',
-                touched: false
+                value: 'None',
+                touched: true
             }
         }
     }

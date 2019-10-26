@@ -8,12 +8,13 @@ import NoteMain from './NoteMain/NoteMain';
 import AddFolder from './AddFolder/AddFolder';
 import AddNote from './AddNote/AddNote';
 import NotefulContext from './NotefulContext';
-import FolderNavError from './FolderNavError/FolderNavError';
-import NoteNavError from './NoteNavError/NoteNavError';
-import NoteFilterError from './NoteFilterError/NoteFilterError';
-import NoteMainError from './NoteMainError/NoteMainError';
-import AddFolderError from './AddFolderError/AddFolderError';
-import AddNoteError from './AddNoteError/AddNoteError';
+//import FolderNavError from './FolderNavError/FolderNavError';
+//import NoteNavError from './NoteNavError/NoteNavError';
+//import NoteFilterError from './NoteFilterError/NoteFilterError';
+//import NoteMainError from './NoteMainError/NoteMainError';
+//import AddFolderError from './AddFolderError/AddFolderError';
+//import AddNoteError from './AddNoteError/AddNoteError';
+import ErrorHandler from './ErrorHandler/ErrorHandler';
 import './App.css';
 
 class App extends Component {
@@ -96,7 +97,7 @@ class App extends Component {
   handleNav() {
     return (
       <>
-        <FolderNavError>
+        <ErrorHandler>
           <Route
             exact path="/"
             component={FolderNav}
@@ -105,8 +106,8 @@ class App extends Component {
             path="/folder/:folderId"
             component={FolderNav}
           />
-        </FolderNavError>
-        <NoteNavError>
+        </ErrorHandler>
+        <ErrorHandler>
           <Route
             path="/note/:noteId"
             component={NoteNav}
@@ -119,7 +120,7 @@ class App extends Component {
             path="/add-note"
             component={NoteNav}
           />
-        </NoteNavError>
+        </ErrorHandler>
       </>
     );
   }
@@ -128,7 +129,7 @@ class App extends Component {
   handleMain() {
     return (
       <>
-        <NoteFilterError>
+        <ErrorHandler>
           <Route
             exact path="/"
             component={NoteFilter}
@@ -137,26 +138,26 @@ class App extends Component {
             path="/folder/:folderId"
             component={NoteFilter}
           />
-        </NoteFilterError>
-        <NoteMainError>
+        </ErrorHandler>
+        <ErrorHandler>
           <Route
             path="/note/:noteId"
             component={NoteMain}
           />
-        </NoteMainError>
+        </ErrorHandler>
 
-        <AddFolderError>
+        <ErrorHandler>
           <Route
             path='/add-folder'
             component={AddFolder}
           />
-        </AddFolderError>
-        <AddNoteError>
+        </ErrorHandler>
+        <ErrorHandler>
           <Route
             path='/add-note'
             component={AddNote}
           />
-        </AddNoteError>
+        </ErrorHandler>
       </>
     );
   }

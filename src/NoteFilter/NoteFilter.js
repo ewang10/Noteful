@@ -2,20 +2,21 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import NotefulContext from '../NotefulContext';
 import Note from '../Note/Note';
-import NoteError from '../NoteError/NoteError';
+//import NoteError from '../NoteError/NoteError';
+import ErrorHandler from '../ErrorHandler/ErrorHandler';
 import './NoteFilter.css';
 
 class NoteFilter extends Component {
     static contextType = NotefulContext;
     noFilter() {
         const notes = this.context.notes.map((note, i) =>
-            <NoteError key={i}>
+            <ErrorHandler key={i}>
                 <Note
                     note={note}
                     key={i}
                     history={this.props.history}
                 />
-            </NoteError>
+            </ErrorHandler>
         );
         return notes;
     }
@@ -24,12 +25,12 @@ class NoteFilter extends Component {
         const notes = this.context.notes
             .filter(note => note.folderId === this.context.folder.id)
             .map((note, i) =>
-                <NoteError>
+                <ErrorHandler>
                     <Note
                         note={note}
                         key={i}
                     />
-                </NoteError>
+                </ErrorHandler>
             );
         return notes;
     }

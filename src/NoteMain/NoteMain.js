@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Note from '../Note/Note';
 import NotefulContext from '../NotefulContext';
-import NoteError from '../NoteError/NoteError';
+//import NoteError from '../NoteError/NoteError';
+import ErrorHandler from '../ErrorHandler/ErrorHandler';
 import './NoteMain.css';
 
 class NoteMain extends Component {
@@ -9,12 +10,12 @@ class NoteMain extends Component {
     displayNote() {
         return (
             <>
-                <NoteError>
+                <ErrorHandler>
                     <Note
                         note={this.context.note}
                         history={this.props.history}
                     />
-                </NoteError>
+                </ErrorHandler>
                 <div className="noteContent">
                     {this.context.note.content}
                 </div>
