@@ -132,6 +132,9 @@ class AddNote extends Component {
                             name="note-name"
                             type="text"
                             onChange={e => this.updateName(e.target.value)}
+                            aria-required="true"
+                            aria-invalid="true"
+                            aria-describedby="validate"
                             required />
                         {this.state.name.touched && (
                             <ValidationError message={this.validataName()}/>
@@ -142,6 +145,9 @@ class AddNote extends Component {
                         <textarea
                             id="note-content"
                             name="note-content"
+                            aria-required="true"
+                            aria-invalid="true"
+                            aria-describedby="validate"
                             onChange={e => this.updateContent(e.target.value)}
                         />
                         {this.state.content.touched && (
@@ -154,6 +160,9 @@ class AddNote extends Component {
                             id="note-folder"
                             name="note-folder"
                             onChange={e => this.updateFolder(e.target.value)}
+                            aria-required="true"
+                            aria-invalid="true"
+                            aria-describedby="validate"
                             required>
                             <option value="None">...</option>
                             {options}

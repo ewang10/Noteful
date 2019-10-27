@@ -53,16 +53,16 @@ class AddFolder extends Component {
         })
         .then(res => {
             if (!res.ok) {
-                console.log("response not okay");
+                //console.log("response not okay");
                 throw new Error(res.statusText);
             }
             return res.json();
         })
         .then(data => {
             folderName.value = '';
-            console.log("folder data", data);
+            //console.log("folder data", data);
             this.context.addFolder(data);
-            console.log("going from add folder to home...");
+            //console.log("going from add folder to home...");
             this.props.history.push('/');
         })
         .catch(error => this.setState({error}));
@@ -81,6 +81,9 @@ class AddFolder extends Component {
                         id="folderName"
                         name="folderName"
                         type="text"
+                        aria-required="true"
+                        aria-invalid="true"
+                        aria-describedby="validate"
                         onChange={e => this.updateFolderName(e.target.value)}
                         required />
                     {this.state.folderName.touch && (

@@ -25,7 +25,7 @@ class NoteFilter extends Component {
         const notes = this.context.notes
             .filter(note => note.folderId === this.context.folder.id)
             .map((note, i) =>
-                <ErrorHandler>
+                <ErrorHandler key={i}>
                     <Note
                         note={note}
                         key={i}
