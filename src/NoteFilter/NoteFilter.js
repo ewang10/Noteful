@@ -23,7 +23,7 @@ class NoteFilter extends Component {
 
     noteFilter() {
         const notes = this.context.notes
-            .filter(note => note.folderId === this.context.folder.id)
+            .filter(note => note.folderid === this.context.folder.id)
             .map((note, i) =>
                 <ErrorHandler key={i}>
                     <Note

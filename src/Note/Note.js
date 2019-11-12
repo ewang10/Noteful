@@ -8,7 +8,7 @@ import './Note.css';
 class Note extends Component {
     static contextType = NotefulContext;
     deleteNoteRequest(noteId, cb) {
-        const url = 'http://localhost:9090/notes';
+        const url = 'http://localhost:8000/api/notes';
         fetch(`${url}/${noteId}`, {
             method: "DELETE",
             headers: {

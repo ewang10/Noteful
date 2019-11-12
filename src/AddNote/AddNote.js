@@ -35,11 +35,11 @@ class AddNote extends Component {
         const note = {
             name: name.value,
             content: content.value,
-            folderId: this.findFolderId(folder.value),
+            folderid: this.findFolderId(folder.value),
             modified: new Date()
         }
         this.setState({error: null});
-        const url = 'http://localhost:9090/notes';
+        const url = 'http://localhost:8000/api/notes';
         fetch(url, {
             method: 'POST',
             body: JSON.stringify(note),

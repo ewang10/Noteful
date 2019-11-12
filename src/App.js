@@ -29,7 +29,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const folderUrl = 'http://localhost:9090/folders';
+    const folderUrl = 'http://localhost:8000/api/folders';
     fetch(folderUrl)
       .then(res => {
         if (!res.ok) {
@@ -44,7 +44,7 @@ class App extends Component {
       })
       .catch(err => alert("something went wrong: " + err.message));
 
-    const notesUrl = 'http://localhost:9090/notes';
+    const notesUrl = 'http://localhost:8000/api/notes';
     fetch(notesUrl)
       .then(res => {
         if (!res.ok) {
